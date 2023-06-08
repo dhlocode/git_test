@@ -40,7 +40,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Step One
-        run: env | sort
+        run: date
   job4:
     name: Fourth job
     runs-on: windows-latest
