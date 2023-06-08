@@ -1,0 +1,54 @@
+name: Complex Workflow
+
+#on: push
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+          - info
+          - warning
+          - debug
+      print_tags:
+        description: 'True to print to STDOUT'
+        required: true
+        type: boolean
+      tags:
+        description: 'Test scenario tags'
+        required: false
+        type: string
+
+jobs:
+  job1:
+    name: First Job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step One
+        uses: actions/checkout@v3
+        run: env | sort
+  job2:
+    name: Second job
+    runs-on: windows-latest
+    steps:
+      - name: Step One
+        uses: actions/checkout@v3
+        run: Get-Date
+  job3:
+    name: Third job
+    runs-on: macos-latest
+    steps:
+      - name: Step One
+        uses: actions/checkout@v3
+        run: env | sort
+  job4:
+    name: Fourth job
+    runs-on: windows-latest
+    needs: [job1, job2, job3]
+    steps:
+      - name: Step One
+        uses: actions/checkout@v3
+        run: Get-Date
